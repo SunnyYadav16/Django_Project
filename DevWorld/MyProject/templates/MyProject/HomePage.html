@@ -1,0 +1,32 @@
+{% extends 'MyProject/base.html' %}
+
+{% block content %}
+    <h1>Project Page</h1>
+
+    <table>
+        <tr>
+            <th>Positive</th>
+            <th>Positive Votes</th>
+            <th>Votes</th>
+            <th>Date of Creation</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for items in myproject %}
+        <tr>
+            <td>{{items.title}}</td>
+            <td>{{items.vote_ratio}}</td>
+            <td>{{items.vote_total}}</td>
+            <td>{{items.created}}</td>
+            <td><a href="{% url 'project' items.id %}">View</a></td>
+            <td><a href="{% url 'update_project' items.id %}">Update</a></td>
+            <td><a href="{% url 'delete_project' items.id %}">Delete</a></td>
+<!--            {{items.title}}  -&ndash;&gt; {{items.description}} -->
+        {% endfor %}
+        </tr>
+    </table>
+{% endblock %}
+
+
+
+

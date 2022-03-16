@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from .models import Profile
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+
 
 # Create your views here.
 def all_profile(request):
@@ -28,7 +30,7 @@ def user_profile(request, pk):
 
 
 def loginUserPage(request):
-
+    page = 'login'
     if request.user.is_authenticated:
         return redirect('profile')
 
@@ -38,7 +40,7 @@ def loginUserPage(request):
 
         try:
             user = User.objects.get(username=username)
-        except :
+        except:
             messages.error(request, 'Username does not exist')
 
         user = authenticate(request, username=username, password=password)
@@ -56,3 +58,20 @@ def logoutUserPage(request):
     logout(request)
     messages.success(request, 'User successfully logged out!')
     return redirect('login')
+
+
+def registerUser(request):
+    page = 'register'
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+
+            messages.success(request, "User Account was created successfully!")
+
+    context = {"page": page, "form": form}
+    return render(request, 'users/login_register.html', context=context)

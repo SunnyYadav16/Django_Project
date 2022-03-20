@@ -9,7 +9,7 @@
         <div class="column column--1of3">
           <div class="card text-center">
             <div class="card__body dev">
-              <img class="avatar avatar--xl" src="{{ profile.profile_image.url }}" />
+              <img class="avatar avatar--xl" src="{{ user_profile.profile_image.url }}" />
               <h2 class="dev__name">{{ user_profile.name }}</h2>
               <p class="dev__title">{{ user_profile.short_intro }}</p>
               <p class="dev__location">Based in {{ user_profile.location }}</p>
@@ -80,11 +80,11 @@
               {% for projects in user_profile.project_set.all %}
               <div class="column">
                 <div class="card project">
-                  <a href="single-project.html" class="project">
-                    <img class="project__thumbnail" src="images/project-b.png" alt="project thumbnail" />
+                  <a href="{% url 'project' projects.id %}" class="project">
+                    <img class="project__thumbnail" src="{{projects.featured_image.url}}" alt="project thumbnail" />
                     <div class="card__body">
                       <h3 class="project__title">{{projects.title}}</h3>
-                      <p><a class="project__author" href="profile.html">By {{projects.owner.name}}</a></p>
+                      <p><a class="project__author" href="{% url 'user_profile' projects.owner.id %}">By {{projects.owner.name}}</a></p>
                       <p class="project--rating">
                         <span style="font-weight: bold;">{{projects.vote_ratio}}%</span> Postitive
                         Feedback ({{projects.vote_total}} Vote{{projects.vote_total|pluralize:"s"}})

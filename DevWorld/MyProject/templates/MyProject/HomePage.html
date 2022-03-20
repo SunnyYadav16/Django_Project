@@ -11,11 +11,11 @@
         </div>
 
         <div class="hero-section__search">
-          <form class="form" action="#" method="get">
+          <form id="searchForm" class="form" action="{% url 'projects' %}" method="get">
             <div class="form__field">
               <label for="formInput#search">Search By Projects </label>
-              <input class="input input--text" id="formInput#search" type="text" name="text"
-                placeholder="Search by Project Title" />
+              <input class="input input--text" id="formInput#search" type="text" name="search_query"
+                placeholder="Search by Project Title" value="{{search_query}}"/>
             </div>
 
             <input class="btn btn--sub btn--lg" type="submit" value="Search" />
@@ -36,7 +36,7 @@
                 <div class="card__body">
                   <h3 class="project__title">{{items.title}}</h3>
 
-                  <p><a class="project__author" href="{% url 'project' items.id %}">By {{items.owner.name}}</a></p>
+                  <p><a class="project__author" href="{% url 'user_profile' items.owner.id %}">By {{items.owner.name}}</a></p>
 
                   <p class="project--rating">
                     <span style="font-weight: bold;">{{items.vote_ratio}}%</span> Positive
@@ -57,6 +57,9 @@
         </div>
       </div>
     </section>
+
+    {% include 'MyProject/pagination.html' with queryset=myproject custom_range=custom_range  %}
+
   </main>
 {% endblock %}
 

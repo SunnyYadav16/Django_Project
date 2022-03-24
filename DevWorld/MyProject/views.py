@@ -16,7 +16,7 @@ def projects(request):
         "search_query": search_query,
         "custom_range": custom_range,
     }
-    return render(request, 'MyProject/HomePage.html', context)
+    return render(request, 'MyProject/HomePage.html', context=context)
 
 
 def project(request, pk):

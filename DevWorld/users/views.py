@@ -44,15 +44,16 @@ def loginUserPage(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, 'Username does not exist')
+        # try:
+        #     user = User.objects.get(username=username)
+        # except:
+        #     messages.error(request, 'Username does not exist')
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
+            messages.success(request, "Logged in successfully")
             return redirect(request.GET['next'] if 'next' in request.GET else 'account')
         else:
             messages.error(request, 'Username or password is incorrect!')
